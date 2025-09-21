@@ -1,0 +1,68 @@
+function _wslwrap_help --description "Show usage information for wslwrap and related commands"
+    # Top-level usage (no args)
+    if test (count $argv) -eq 0
+        _wslwrap_echo header -n "Usage: "
+        _wslwrap_echo command "wslwrap <command> [<args>...]"
+        echo ""
+        echo "wslwrap provides lightweight wrapper functions for mixed Windows / WSL usage."
+        echo ""
+        _wslwrap_echo header "Available commands:"
+        _wslwrap_echo command -n "  register    "
+        echo "Register a wrapper (auto/windows)."
+        _wslwrap_echo command -n "  unregister  "
+        echo "Remove one or more registered wrappers."
+        _wslwrap_echo command -n "  list        "
+        echo "List registered wrapper names."
+        _wslwrap_echo command -n "  help        "
+        echo "Show general or command-specific help."
+        echo ""
+        _wslwrap_echo info -n "Run '"
+        _wslwrap_echo command -n "wslwrap help <command>"
+        echo "' for details."
+        return 0
+    end
+
+    set -l subcommand $argv[1]
+    switch $subcommand
+        case register
+            _wslwrap_echo header -n "Usage: "
+            _wslwrap_echo command "wslwrap register [--mode <auto|windows>] <command> [<args>...]"
+            echo ""
+            echo "Register a wrapper for <command>."
+            echo "When invoked, the wrapper prepends <args> you provided, then adds the runtime arguments you type."
+            echo ""
+            _wslwrap_echo header "Modes:"
+            _wslwrap_echo command -n "  auto     "
+            echo "Automatically chooses how to invoke the command."
+            _wslwrap_echo command -n "  windows  "
+            echo "Force Windows-side invocation."
+            echo ""
+            _wslwrap_echo header "Examples:"
+            _wslwrap_echo command "  wslwrap register fd --path-separator=/"
+            echo "    Register fd (auto) with '--path-separator=/' option."
+            _wslwrap_echo command "  wslwrap register --mode windows git"
+            echo "    Register git forcing Windows mode."
+        case unregister
+            _wslwrap_echo header -n "Usage: "
+            _wslwrap_echo command "wslwrap unregister <command> [<command> ...]"
+            echo ""
+            echo "Remove one or more wrapper functions."
+            echo ""
+            _wslwrap_echo header "Example:"
+            _wslwrap_echo command "  wslwrap unregister fd rg git"
+        case list
+            _wslwrap_echo header -n "Usage: "
+            _wslwrap_echo command "wslwrap list"
+            echo ""
+            echo "List each registered wrapper name."
+        case help
+            _wslwrap_echo header -n "Usage: "
+            _wslwrap_echo command "wslwrap help [<command>]"
+            echo ""
+            echo "Show general help or per-command help."
+        case "*"
+            _wslwrap_echo error "unknown subcommand '$subcommand'"
+            _wslwrap_echo usage
+            return 1
+    end
+end
