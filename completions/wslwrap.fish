@@ -1,0 +1,35 @@
+# All subcommands
+set -l commands register unregister list help
+
+# subcommands
+complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments register --description "Register a wrapper (auto/windows)"
+complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments unregister --description "Remove one or more registered wrappers"
+complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments list --description "List registered wrapper names"
+complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments help --description "Show general or command-specific help"
+
+# register: suggest all available commands
+complete --command wslwrap --condition "_wslwrap_at 2 register; and test (count (commandline -xpc)) -eq 2" \
+    --no-files \
+    --arguments "(__fish_complete_command)" \
+    --description "Command to register"
+
+complete --command wslwrap --condition "_wslwrap_at 2 register; and test (count (commandline -xpc)) -ge 3" \
+    --no-files \
+    --arguments "(_wslwrap_delegate_complete 3)"
+
+# unregister: suggest registered commands
+complete --command wslwrap --condition "_wslwrap_at 2 unregister" \
+    --no-files \
+    --arguments "(_wslwrap_unused_from 3 (wslwrap list))" \
+    --description "Targets to unregister"
+
+# list: no arguments
+complete --command wslwrap --condition "_wslwrap_at 2 list" --no-files
+
+# help: suggest all subcommands
+complete --command wslwrap --condition "_wslwrap_at 2 help; and test (count (commandline -xpc)) -eq 2" \
+    --no-files \
+    --arguments "(string match --invert help $commands)" \
+    --description "Subcommand to show help"
+
+complete --command wslwrap --condition "_wslwrap_at 2 help; and test (count (commandline -xpc)) -ge 3" --no-files
