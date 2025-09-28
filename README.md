@@ -23,7 +23,7 @@ Auto mode rule:
 - 🚀 **Fast Windows Execution**: Uses both WSL2 PATH and `where.exe` for path resolution with built-in caching to minimize lookup time
 - 🛡️ **PATH Independent**: Works even when Windows PATH isn't registered in WSL2's PATH environment
 - ⚡ **Multi-level Caching**: System-wide and PATH-aware caching strategies for optimal performance
-- 🛤️ **PATH Management**: Easily add Windows command directories to your PATH
+- 🔗 **System-wide Access**: Create symlinks for Windows executables accessible from any shell
 
 ## 🚀 Quick Start
 
@@ -52,7 +52,7 @@ Open a new shell and just use `git`, `rg`, `fd` normally.
 
 - **No PATH Pollution**: Your WSL2 environment stays clean — no need to manually add Windows directories
 - **Context Awareness**: Automatically detects whether you're working in a Windows or Linux context
-- **PATH Management**: Built-in tools to selectively add Windows command directories
+- **System-wide Access**: Create symlinks for access from any shell or script
 
 ## Commands
 
@@ -112,34 +112,57 @@ Show registered wrapper names:
 wslwrap list
 ```
 
-### 🛤️ add-path
+### 🔗 link
 
-Add directories containing Windows commands to your PATH:
+Create symlinks in `/usr/local/bin` for system-wide access to Windows executables:
 
 ```fish
-wslwrap add-path [-a|--append] [-p|--prepend] <command> [<command> ...]
+wslwrap link <command> [<target_path>]
 ```
 
-#### Options
-
-- `-a, --append` — Add to end of PATH (lower priority, default).
-- `-p, --prepend` — Add to beginning of PATH (higher priority).
-
 ```fish
-wslwrap add-path win32yank              # Add win32yank directory to PATH
-wslwrap add-path --prepend node npm     # Add Node.js tools with high priority
-wslwrap add-path clip notepad winget    # Add multiple Windows tool directories
+wslwrap link git                            # Auto-detect → /usr/local/bin/git
+wslwrap link git.exe                        # Auto-detect → /usr/local/bin/git.exe
+wslwrap link git /mnt/c/Git/bin/git.exe     # Explicit target path → /usr/local/bin/git
 ```
 
 > [!TIP]
-> Particularly useful when you have `appendWindowsPath = false` in your `.wslconfig`:
+> Use `command` or `command.exe` to control the symlink name and how you invoke it.
+
+> [!NOTE]
+> May require sudo privileges depending on system configuration.
+
+### 🔓 unlink
+
+Remove Windows executable symlinks from `/usr/local/bin`:
+
+```fish
+wslwrap unlink <command> [<command> ...]
+```
+
+```fish
+wslwrap unlink node git                     # Remove multiple symlinks
+wslwrap links | wslwrap unlink              # Remove all Windows exe symlinks
+echo "node git" | wslwrap unlink            # Pipe input support
+```
+
+> [!TIP]
+> If you want to unlink all symlinks:
 >
-> ```ini
-> [interop]
-> appendWindowsPath = false
+> ```fish
+> wslwrap links | wslwrap unlink
 > ```
->
-> Use `add-path` to selectively add only the Windows tools you need, avoiding PATH pollution while maintaining access to essential Windows executables.
+
+> [!NOTE]
+> May require sudo privileges depending on system configuration.
+
+### 📋 links
+
+List Windows executable symlinks in `/usr/local/bin`:
+
+```fish
+wslwrap links
+```
 
 ### ❓ help
 
@@ -148,7 +171,7 @@ Show general or subcommand-specific help:
 ```fish
 wslwrap help
 wslwrap help register
-wslwrap help add-path
+wslwrap help link
 ```
 
 ## 📜 License
