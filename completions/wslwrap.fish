@@ -1,5 +1,5 @@
 # All subcommands
-set -l commands register unregister list link unlink help
+set -l commands register unregister list link unlink links help
 
 # subcommands
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments register --description "Register a wrapper (auto/windows)"
@@ -7,6 +7,7 @@ complete --command wslwrap --condition "not __fish_seen_subcommand_from $command
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments list --description "List registered wrapper names"
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments link --description "Create symlinks for Windows executables"
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments unlink --description "Remove Windows executable symlinks"
+complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments links --description "List Windows executable symlinks"
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments help --description "Show general or command-specific help"
 
 # register: options
@@ -53,6 +54,9 @@ complete --command wslwrap --condition "_wslwrap_at 2 unlink" \
     --no-files \
     --arguments "(_wslwrap_unused_from 3 (wslwrap links))" \
     --description "Symlinks to unlink"
+
+# links: no arguments
+complete --command wslwrap --condition "_wslwrap_at 2 links" --no-files
 
 # help: suggest all subcommands
 complete --command wslwrap --condition "_wslwrap_at 2 help; and test (count (commandline -xpc)) -eq 2" \

@@ -17,6 +17,8 @@ function _wslwrap_help --description "Show usage information for wslwrap and rel
         echo "Create symlinks for Windows executables in /usr/local/bin."
         _wslwrap_echo command -n "  unlink      "
         echo "Remove Windows executable symlinks from /usr/local/bin."
+        _wslwrap_echo command -n "  links       "
+        echo "List Windows executable symlinks in /usr/local/bin."
         _wslwrap_echo command -n "  help        "
         echo "Show general or command-specific help."
         echo ""
