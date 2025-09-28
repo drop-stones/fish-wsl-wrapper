@@ -7,10 +7,11 @@ function _wslwrap_register --description "Register a wrapper based on the given 
         return 1
     end
 
-    # Idempotent: already defined => do nothing
+    # Remove existing function to allow updates
     set -l cmd $argv[1]
     if functions -q $cmd
-        return
+        _wslwrap_echo info "Updating existing wrapper for '$cmd'"
+        wslwrap unregister $cmd
     end
 
     set -l mode auto
