@@ -13,7 +13,7 @@ function _wslwrap_unregister --description "Unregister managed wrapper functions
 
     for cmd in $argv
         if _wslwrap_is_managed $cmd
-            set -l winexe_path (_wslwrap_get_winexe_envvar $cmd)
+            set -l winexe_path "$wslwrap_winexe_prefix$cmd"
             set -q $winexe_path && set --erase $winexe_path
             functions -e $cmd
         else

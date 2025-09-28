@@ -19,7 +19,7 @@ function _wslwrap_add_path --description "Add directories containing specified W
     set -l failed_commands
 
     for cmd in $argv
-        set -l cached_path "wslwrap_path_$cmd"
+        set -l cached_path "$wslwrap_path_prefix$cmd"
 
         # Use cached path if available and valid
         if set -q $cached_path && test -x $$cached_path/$cmd.exe
