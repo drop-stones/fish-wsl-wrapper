@@ -10,3 +10,9 @@ function _wslwrap_uninstall --on-event wslwrap_uninstall --description "Uninstal
     # Remove the universal variable
     set -q wslwrap_function_marker && set --erase wslwrap_function_marker
 end
+
+function _wslwrap_clear_cache --on-variable PATH --description "Clear cached winexe paths when PATH changes"
+    for var in (set -n -g | string match "wslwrap_winexe_*")
+        set -e -g $var
+    end
+end
