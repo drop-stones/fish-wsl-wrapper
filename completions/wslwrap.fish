@@ -7,15 +7,31 @@ complete --command wslwrap --condition "not __fish_seen_subcommand_from $command
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments list --description "List registered wrapper names"
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments help --description "Show general or command-specific help"
 
-# register: suggest all available commands
-complete --command wslwrap --condition "_wslwrap_at 2 register; and test (count (commandline -xpc)) -eq 2" \
+# register: options
+complete --command wslwrap --condition "_wslwrap_at 2 register" \
+    --long-option mode \
+    --require-parameter \
+    --arguments "auto windows" \
+    --no-files \
+    --description "Registration mode"
+
+complete --command wslwrap --condition "_wslwrap_at 2 register" \
+    --long-option cache \
+    --require-parameter \
+    --arguments "system path" \
+    --no-files \
+    --description "Cache strategy"
+
+# register: suggest all commands
+complete --command wslwrap --condition "_wslwrap_at 2 register && test (_wslwrap_get_command_index) -eq 0" \
     --no-files \
     --arguments "(__fish_complete_command)" \
     --description "Command to register"
 
-complete --command wslwrap --condition "_wslwrap_at 2 register; and test (count (commandline -xpc)) -ge 3" \
-    --no-files \
-    --arguments "(_wslwrap_delegate_complete 3)"
+# register: delegate to command completion
+complete --command wslwrap --condition "_wslwrap_at 2 register && test (_wslwrap_get_command_index) -ne 0" \
+    --keep-order \
+    --arguments "(_wslwrap_delegate_complete (_wslwrap_get_command_index))"
 
 # unregister: suggest registered commands
 complete --command wslwrap --condition "_wslwrap_at 2 unregister" \
