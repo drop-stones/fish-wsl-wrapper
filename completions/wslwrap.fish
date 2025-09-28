@@ -1,10 +1,12 @@
 # All subcommands
-set -l commands register unregister list help
+set -l commands register unregister list link help
 
 # subcommands
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments register --description "Register a wrapper (auto/windows)"
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments unregister --description "Remove one or more registered wrappers"
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments list --description "List registered wrapper names"
+complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments link --description "Create symlinks for Windows executables"
+complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments unlink --description "Remove Windows executable symlinks"
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments help --description "Show general or command-specific help"
 
 # register: options
@@ -41,6 +43,10 @@ complete --command wslwrap --condition "_wslwrap_at 2 unregister" \
 
 # list: no arguments
 complete --command wslwrap --condition "_wslwrap_at 2 list" --no-files
+
+# link: optional path completion
+complete --command wslwrap --condition "_wslwrap_at 2 link && test (count (commandline -xpc)) -eq 2" --no-files
+complete --command wslwrap --condition "_wslwrap_at 2 link && test (count (commandline -xpc)) -eq 3" --description "Path to Windows executable"
 
 # help: suggest all subcommands
 complete --command wslwrap --condition "_wslwrap_at 2 help; and test (count (commandline -xpc)) -eq 2" \

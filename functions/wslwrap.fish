@@ -27,6 +27,8 @@ function wslwrap --description "Main entry point for wslwrap: manage registratio
             _wslwrap_unregister $argv
         case list
             _wslwrap_list $argv
+        case link
+            _wslwrap_link $argv
         case help
             _wslwrap_help $argv
         case "*"
