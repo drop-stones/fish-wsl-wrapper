@@ -11,19 +11,9 @@ function _wslwrap_resolve_winexe_path --argument-names cmd cache --description "
     set -l resolved_path ""
 
     # Try PATH resolution first
-    if not set resolved_path (command -v $cmd.exe 2>/dev/null)
-        # Fallback to where.exe
-        if /mnt/c/WINDOWS/system32/where.exe $cmd 2>/dev/null </dev/null | read -l win_path
-            set win_path (string trim -- $win_path)
-            if not set resolved_path (wslpath -a $win_path 2>/dev/null)
-                _wslwrap_echo error "Failed to resolve Windows path for '$cmd'."
-                return 1
-            end
-        end
-    end
-
-    # If no path found, return error
-    if test -z "$resolved_path"
+    if set resolved_path (command -v $cmd.exe 2>/dev/null)
+    else if set resolved_path (_wslwrap_find_winexe $cmd)
+    else
         _wslwrap_echo error "'$cmd' is not found in PATH or Windows PATH."
         return 1
     end
