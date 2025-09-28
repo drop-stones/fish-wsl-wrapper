@@ -1,5 +1,5 @@
 # All subcommands
-set -l commands register unregister list link help
+set -l commands register unregister list link unlink help
 
 # subcommands
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments register --description "Register a wrapper (auto/windows)"
@@ -47,6 +47,12 @@ complete --command wslwrap --condition "_wslwrap_at 2 list" --no-files
 # link: optional path completion
 complete --command wslwrap --condition "_wslwrap_at 2 link && test (count (commandline -xpc)) -eq 2" --no-files
 complete --command wslwrap --condition "_wslwrap_at 2 link && test (count (commandline -xpc)) -eq 3" --description "Path to Windows executable"
+
+# unlink: suggest linked commands
+complete --command wslwrap --condition "_wslwrap_at 2 unlink" \
+    --no-files \
+    --arguments "(_wslwrap_unused_from 3 (wslwrap links))" \
+    --description "Symlinks to unlink"
 
 # help: suggest all subcommands
 complete --command wslwrap --condition "_wslwrap_at 2 help; and test (count (commandline -xpc)) -eq 2" \
