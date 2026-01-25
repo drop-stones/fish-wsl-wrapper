@@ -51,15 +51,19 @@ Open a new shell and just use `git`, `rg`, `fd` normally.
 - **Context Awareness**: Automatically detects whether you're working in a Windows or Linux context
 - **System-wide Access**: Create symlinks for access from any shell or script
 
-## Commands
+## 🛠️ Commands
 
-### ⚙️ register
+### 🦑 Wrapper Management
+
+#### ⚙️ register
+
+Register a wrapper:
 
 ```fish
 wslwrap register [--mode <auto|windows>] <command> [<args>...]
 ```
 
-#### Modes
+##### Modes
 
 - `auto` (default) — Select Windows vs Linux based on the current path.
 - `windows` — Always invoke the Windows executable (`command.exe`).
@@ -76,7 +80,7 @@ wslwrap register --mode windows rg             # Force Windows everywhere
 > - Re-registering a command updates its configuration (mode, options).
 > - Wrappers are not persisted; keep them in `~/.config/fish/config.fish` if you want them every session.
 
-### 🗑️ unregister
+#### 🗑️ unregister
 
 Remove one or more wrappers:
 
@@ -91,7 +95,7 @@ wslwrap unregister git fd rg
 > wslwrap list | wslwrap unregister
 > ```
 
-### 📋 list
+#### 📋 list
 
 Show registered wrapper names:
 
@@ -99,7 +103,9 @@ Show registered wrapper names:
 wslwrap list
 ```
 
-### 🔗 link
+### ⛓️ Symlink Management
+
+#### 🔗 link
 
 Create symlinks in `WSLWRAP_BIN_DIR` (default: `~/.local/share/wslwrap/bin`) for system-wide access to Windows executables:
 
@@ -117,7 +123,7 @@ wslwrap link git /mnt/c/Git/bin/git.exe     # Explicit target path → $WSLWRAP_
 > This plugin add `WSLWRAP_BIN_DIR` (default: `~/.local/share/wslwrap/bin`) to your `PATH` automatically.
 > If you wish to customize the directory, see [⚙️ Configuration](#%EF%B8%8F-configuration) below.
 
-### 🔓 unlink
+#### 🔓 unlink
 
 Remove Windows executable symlinks from `WSLWRAP_BIN_DIR`:
 
@@ -138,7 +144,7 @@ echo "node git" | wslwrap unlink            # Pipe input support
 > wslwrap links | wslwrap unlink
 > ```
 
-### 📋 links
+#### 📋 links
 
 List Windows executable symlinks in `WSLWRAP_BIN_DIR`:
 
@@ -146,7 +152,9 @@ List Windows executable symlinks in `WSLWRAP_BIN_DIR`:
 wslwrap links
 ```
 
-### 🧹 clear
+### 🔧 Other Commands
+
+#### 🧹 clear
 
 Clear all registered wrappers and symlinks:
 
@@ -154,7 +162,7 @@ Clear all registered wrappers and symlinks:
 wslwrap clear
 ```
 
-### ❓ help
+#### ❓ help
 
 Show general or subcommand-specific help:
 
