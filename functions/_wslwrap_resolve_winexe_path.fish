@@ -1,5 +1,5 @@
 function _wslwrap_resolve_winexe_path --argument-names cmd cache --description "Resolve the path of a Windows command"
-    set -l cached_winexe "$wslwrap_winexe_prefix$cmd"
+    set -l cached_winexe (_wslwrap_get_winexe_cache_varname $cmd)
 
     # Return cached path if exists and file is accessible
     if set -q $cached_winexe && test -x $$cached_winexe
