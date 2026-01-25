@@ -101,27 +101,29 @@ wslwrap list
 
 ### 🔗 link
 
-Create symlinks in `/usr/local/bin` for system-wide access to Windows executables:
+Create symlinks in `WSLWRAP_BIN_DIR` (default: `~/.local/share/wslwrap/bin`) for system-wide access to Windows executables:
 
 ```fish
 wslwrap link <command> [<target_path>]
 ```
 
 ```fish
-wslwrap link git                            # Auto-detect → /usr/local/bin/git
-wslwrap link git.exe                        # Auto-detect → /usr/local/bin/git.exe
-wslwrap link git /mnt/c/Git/bin/git.exe     # Explicit target path → /usr/local/bin/git
+wslwrap link git                            # Auto-detect git.exe → $WSLWRAP_BIN_DIR/git
+wslwrap link git.exe                        # Auto-detect git.exe → $WSLWRAP_BIN_DIR/git.exe
+wslwrap link git /mnt/c/Git/bin/git.exe     # Explicit target path → $WSLWRAP_BIN_DIR/git
 ```
 
-> [!TIP]
-> Use `command` or `command.exe` to control the symlink name and how you invoke it.
-
 > [!NOTE]
-> May require sudo privileges depending on system configuration.
+> This plugin add `WSLWRAP_BIN_DIR` to your `PATH` automatically.
+> If you want to change the symlink directory, set `WSLWRAP_BIN_DIR` before loading the plugin.
+>
+> ```fish
+> set -gx WSLWRAP_BIN_DIR ~/my/custom/wslwrap/bin
+> ```
 
 ### 🔓 unlink
 
-Remove Windows executable symlinks from `/usr/local/bin`:
+Remove Windows executable symlinks from `WSLWRAP_BIN_DIR`:
 
 ```fish
 wslwrap unlink <command> [<command> ...]
@@ -140,12 +142,9 @@ echo "node git" | wslwrap unlink            # Pipe input support
 > wslwrap links | wslwrap unlink
 > ```
 
-> [!NOTE]
-> May require sudo privileges depending on system configuration.
-
 ### 📋 links
 
-List Windows executable symlinks in `/usr/local/bin`:
+List Windows executable symlinks in `WSLWRAP_BIN_DIR`:
 
 ```fish
 wslwrap links

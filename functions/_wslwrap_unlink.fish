@@ -14,7 +14,7 @@ function _wslwrap_unlink --description "Remove Windows executable symlinks"
     set -l has_error 0
 
     for cmd in $argv
-        set -l symlink_path /usr/local/bin/$cmd
+        set -l symlink_path $WSLWRAP_BIN_DIR/$cmd
 
         # Check if symlink exists
         if not test -L $symlink_path

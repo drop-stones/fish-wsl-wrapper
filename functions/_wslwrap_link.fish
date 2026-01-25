@@ -7,7 +7,7 @@ function _wslwrap_link --description "Create symlink for Windows executable"
 
     set -l cmd $argv[1]
     set -l target_path $argv[2] # Optional target path
-    set -l symlink_path /usr/local/bin/$cmd
+    set -l symlink_path $WSLWRAP_BIN_DIR/$cmd
 
     # Check if symlink already exists
     if test -L $symlink_path

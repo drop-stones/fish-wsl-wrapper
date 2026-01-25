@@ -28,10 +28,13 @@ function wslwrap --description "Main entry point for wslwrap: manage registratio
         case list
             _wslwrap_list $argv
         case link
+            _wslwrap_ensure_bin_dir || return 1
             _wslwrap_link $argv
         case unlink
+            _wslwrap_ensure_bin_dir || return 1
             _wslwrap_unlink $argv
         case links
+            _wslwrap_ensure_bin_dir || return 1
             _wslwrap_links $argv
         case help
             _wslwrap_help $argv
