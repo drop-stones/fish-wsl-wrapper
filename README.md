@@ -42,9 +42,6 @@ Open a new shell and just use `git`, `rg`, `fd` normally.
 
 ### Performance Optimization
 
-- **Multi-level Caching**: Windows executable paths are cached with configurable strategies
-  - **System cache**: Persistent across all sessions (default)
-  - **Path cache**: Cleared when PATH changes, suitable for dynamic environments
 - **Smart Resolution**: Checks WSL2 PATH first, then falls back to `where.exe`
 - **Direct Execution**: Bypasses repeated PATH searches for Windows executables
 
@@ -59,7 +56,7 @@ Open a new shell and just use `git`, `rg`, `fd` normally.
 ### ⚙️ register
 
 ```fish
-wslwrap register [--mode <auto|windows>] [--cache <system|path>] <command> [<args>...]
+wslwrap register [--mode <auto|windows>] <command> [<args>...]
 ```
 
 #### Modes
@@ -67,26 +64,16 @@ wslwrap register [--mode <auto|windows>] [--cache <system|path>] <command> [<arg
 - `auto` (default) — Select Windows vs Linux based on the current path.
 - `windows` — Always invoke the Windows executable (`command.exe`).
 
-#### Cache Strategies
-
-- `system` (default) — Cache persistently across all sessions.
-- `path` — Follow PATH changes, cleared when PATH is modified.
-
-> [!TIP]
-> The `path` cache strategy works well with mise, direnv, or any tool that modifies PATH dynamically.
-
 ```fish
-wslwrap register git                           # Simple auto switching with system cache
+wslwrap register git                           # Simple auto switching
 wslwrap register fd --path-separator=/         # Auto switching + default options
 wslwrap register --mode windows rg             # Force Windows everywhere
-wslwrap register --cache path node             # PATH-aware caching
-wslwrap register --mode auto --cache system fd # Explicit mode and cache specification
 ```
 
 > [!NOTE]
 >
 > - Omit `.exe` when registering.
-> - Re-registering a command updates its configuration (mode, cache strategy, options).
+> - Re-registering a command updates its configuration (mode, options).
 > - Wrappers are not persisted; keep them in `~/.config/fish/config.fish` if you want them every session.
 
 ### 🗑️ unregister

@@ -18,13 +18,6 @@ complete --command wslwrap --condition "_wslwrap_at 2 register" \
     --no-files \
     --description "Registration mode"
 
-complete --command wslwrap --condition "_wslwrap_at 2 register" \
-    --long-option cache \
-    --require-parameter \
-    --arguments "system path" \
-    --no-files \
-    --description "Cache strategy"
-
 # register: suggest all commands
 complete --command wslwrap --condition "_wslwrap_at 2 register && test (_wslwrap_get_command_index) -eq 0" \
     --no-files \

@@ -1,4 +1,4 @@
-function _wslwrap_resolve_winexe_path --argument-names cmd cache --description "Resolve the path of a Windows command"
+function _wslwrap_resolve_winexe_path --argument-names cmd --description "Resolve the path of a Windows command"
     set -l cached_winexe (_wslwrap_get_winexe_cache_varname $cmd)
 
     # Return cached path if exists and file is accessible
@@ -19,15 +19,7 @@ function _wslwrap_resolve_winexe_path --argument-names cmd cache --description "
     end
 
     # Cache result based on strategy
-    switch $cache
-        case system
-            set --universal $cached_winexe $resolved_path
-        case path
-            set --global $cached_winexe $resolved_path
-        case "*"
-            _wslwrap_echo error "Unknown cache mode '$cache'. Use 'system' or 'path'."
-            return 1
-    end
+    set --global --export $cached_winexe $resolved_path
 
     echo $resolved_path
     return 0
