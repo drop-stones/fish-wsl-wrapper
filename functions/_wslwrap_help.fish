@@ -19,6 +19,8 @@ function _wslwrap_help --description "Show usage information for wslwrap and rel
         echo "Remove Windows executable symlinks from WSLWRAP_BIN_DIR."
         _wslwrap_echo command -n "  links       "
         echo "List Windows executable symlinks in WSLWRAP_BIN_DIR."
+        _wslwrap_echo command -n "  clear       "
+        echo "Clear all registered wrappers and symlinks."
         _wslwrap_echo command -n "  help        "
         echo "Show general or command-specific help."
         echo ""
@@ -106,6 +108,11 @@ function _wslwrap_help --description "Show usage information for wslwrap and rel
             _wslwrap_echo header "Examples:"
             _wslwrap_echo command "  wslwrap links"
             echo "    Show all Windows executable symlinks"
+        case clear
+            _wslwrap_echo header -n "Usage: "
+            _wslwrap_echo command "wslwrap clear"
+            echo ""
+            echo "Clear all registered wrappers and symlinks."
         case help
             _wslwrap_echo header -n "Usage: "
             _wslwrap_echo command "wslwrap help [<command>]"

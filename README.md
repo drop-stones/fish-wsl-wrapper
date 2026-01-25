@@ -146,6 +146,14 @@ List Windows executable symlinks in `WSLWRAP_BIN_DIR`:
 wslwrap links
 ```
 
+### 🧹 clear
+
+Clear all registered wrappers and symlinks:
+
+```fish
+wslwrap clear
+```
+
 ### ❓ help
 
 Show general or subcommand-specific help:

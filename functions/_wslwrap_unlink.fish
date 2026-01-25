@@ -3,6 +3,11 @@ function _wslwrap_unlink --description "Remove Windows executable symlinks"
     if not isatty stdin
         read --local --null --list stdin
         set --append argv $stdin
+
+        # Early return if no commands were read from stdin
+        if test (count $argv) -eq 0
+            return 0
+        end
     end
 
     if test (count $argv) -lt 1
