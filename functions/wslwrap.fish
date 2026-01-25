@@ -34,7 +34,6 @@ function wslwrap --description "Main entry point for wslwrap: manage registratio
             _wslwrap_ensure_bin_dir || return 1
             _wslwrap_unlink $argv
         case links
-            _wslwrap_ensure_bin_dir || return 1
             _wslwrap_links $argv
         case clear
             _wslwrap_clear
