@@ -1,3 +1,12 @@
+# return if not interactive
+status is-interactive || return
+
+# WSL2 check
+if not set -q WSL_DISTRO_NAME
+    _wslwrap_echo warning "must be run inside WSL2"
+    return 1
+end
+
 # Ensure wslwrap user bin dir exists and env var is set
 _wslwrap_ensure_bin_dir
 
