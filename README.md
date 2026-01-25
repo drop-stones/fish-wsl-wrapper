@@ -1,4 +1,4 @@
-# wslwrap.fish 🐟🔀
+# wslwrap.fish 🐟🐧
 
 A lightweight Fish plugin that switches between Linux and Windows executables inside WSL2.
 
@@ -114,12 +114,8 @@ wslwrap link git /mnt/c/Git/bin/git.exe     # Explicit target path → $WSLWRAP_
 ```
 
 > [!NOTE]
-> This plugin add `WSLWRAP_BIN_DIR` to your `PATH` automatically.
-> If you want to change the symlink directory, set `WSLWRAP_BIN_DIR` before loading the plugin.
->
-> ```fish
-> set -gx WSLWRAP_BIN_DIR ~/my/custom/wslwrap/bin
-> ```
+> This plugin add `WSLWRAP_BIN_DIR` (default: `~/.local/share/wslwrap/bin`) to your `PATH` automatically.
+> If you wish to customize the directory, see [⚙️ Configuration](#%EF%B8%8F-configuration) below.
 
 ### 🔓 unlink
 
@@ -158,6 +154,28 @@ Show general or subcommand-specific help:
 wslwrap help
 wslwrap help register
 wslwrap help link
+```
+
+## ⚙️ Configuration
+
+### `WSLWRAP_PATH`: Search PATH for `wslwrap.fish`
+
+Customize how `wslwrap.fish` searches for Windows executables by setting `WSLWRAP_PATH` as a **fish array** (space-separated directories):
+
+```fish
+set -gx WSLWRAP_PATH /mnt/c/Windows/System32 /mnt/c/Program\ Files/OtherTool
+```
+
+> [!TIP]
+> If you use `direnv` or `mise`, you can dynamically change `WSLWRAP_PATH` on a per-project basis.
+> This allows `wslwrap.fish` to resolve different Windows executables depending on your directory.
+
+### `WSLWRAP_BIN_DIR`: Directory for Windows executable symlinks
+
+Set `WSLWRAP_BIN_DIR` to customize where Windows executable symlinks are created:
+
+```fish
+set -gx WSLWRAP_BIN_DIR ~/my/custom/wslwrap/bin
 ```
 
 ## 📜 License

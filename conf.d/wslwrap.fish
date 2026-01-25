@@ -18,7 +18,7 @@ function _wslwrap_uninstall --on-event wslwrap_uninstall --description "Uninstal
     _wslwrap_clear_winexe_cache
 end
 
-function _wslwrap_clear_cache --on-variable PATH --description "Clear cached winexe paths when PATH changes"
+function _wslwrap_clear_cache --on-variable WSLWRAP_PATH --description "Clear cached winexe paths when PATH changes"
     # Remove all cached wslwrap variables
     _wslwrap_clear_winexe_cache
 end

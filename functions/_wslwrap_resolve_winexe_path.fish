@@ -7,13 +7,8 @@ function _wslwrap_resolve_winexe_path --argument-names cmd --description "Resolv
         return 0
     end
 
-    # Resolve path from multiple sources
-    set -l resolved_path ""
-
-    # Try PATH resolution first
-    if set resolved_path (command -v $cmd.exe 2>/dev/null)
-    else if set resolved_path (_wslwrap_find_winexe $cmd)
-    else
+    # Resolve Windows executable path
+    if not set -l resolved_path (_wslwrap_find_winexe $cmd)
         _wslwrap_echo error "'$cmd' is not found in PATH or Windows PATH."
         return 1
     end
