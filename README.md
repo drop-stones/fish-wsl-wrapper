@@ -51,6 +51,7 @@ Open a new shell and use `git`, `rg`, `fd` normally.
 | `unlink <cmd>...` | Remove symlinks |
 | `links` | List symlinks |
 | `clear` | Clear all wrappers and symlinks |
+| `which [-a] <cmd>...` | Resolve command path (wslwrap-aware) |
 | `help [cmd]` | Show help |
 
 ### register
@@ -86,6 +87,16 @@ wslwrap link node /mnt/c/nodejs/node.exe   # Explicit target path
 > [!NOTE]
 >
 > - `WSLWRAP_BIN_DIR` is automatically added to your `PATH`
+
+### which
+
+Resolve a command path, considering wslwrap wrappers. Registered wrappers resolve to the path the wrapper would actually invoke at the current directory; unregistered commands fall back to the system `which`.
+
+```fish
+wslwrap which git           # → /usr/bin/git (in Linux fs) or git.exe path (in /mnt/c/...)
+wslwrap which -a fd         # All matches (wrapper resolution + which -a)
+alias which 'wslwrap which' # Optional: make plain `which` wslwrap-aware
+```
 
 ## ⚙️ Configuration
 
