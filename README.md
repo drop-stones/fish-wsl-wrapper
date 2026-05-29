@@ -100,6 +100,8 @@ set -gx WSLWRAP_PATH /mnt/c/Windows/System32 /mnt/c/Program\ Files/Git/bin
 > [!TIP]
 > Use `direnv` or `mise` to dynamically change `WSLWRAP_PATH` per directory, allowing different Windows executables depending on your project.
 
+Embedded `\r` in each entry is stripped automatically (helps when `.envrc` lives on a Windows filesystem with CRLF line endings).
+
 ### `WSLWRAP_BIN_DIR`
 
 Customize symlink directory (default: `~/.local/share/wslwrap/bin`):
