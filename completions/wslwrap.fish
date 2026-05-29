@@ -1,5 +1,5 @@
 # All subcommands
-set -l commands register unregister list link unlink links clear help
+set -l commands register unregister list link unlink links clear which help
 
 # subcommands
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments register --description "Register a wrapper (auto/windows)"
@@ -9,6 +9,7 @@ complete --command wslwrap --condition "not __fish_seen_subcommand_from $command
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments unlink --description "Remove Windows executable symlinks"
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments links --description "List Windows executable symlinks"
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments clear --description "Clear all registered wrappers and symlinks"
+complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments which --description "Resolve command path (wslwrap-aware which)"
 complete --command wslwrap --condition "not __fish_seen_subcommand_from $commands" --no-files --arguments help --description "Show general or command-specific help"
 
 # register: options
@@ -54,6 +55,12 @@ complete --command wslwrap --condition "_wslwrap_at 2 links" --no-files
 
 # clear: no arguments
 complete --command wslwrap --condition "_wslwrap_at 2 clear" --no-files
+
+# which: flags
+complete --command wslwrap --condition "_wslwrap_at 2 which" --short-option a --long-option all --description "Print all matches"
+
+# which: suggest commands
+complete --command wslwrap --condition "_wslwrap_at 2 which" --no-files --arguments "(__fish_complete_command)" --description "Command to look up"
 
 # help: suggest all subcommands
 complete --command wslwrap --condition "_wslwrap_at 2 help; and test (count (commandline -xpc)) -eq 2" \
