@@ -1,12 +1,10 @@
 function _wslwrap_find_winexe --argument-names cmd --description "Find Windows executable path using WSLWRAP_PATH then where.exe"
     # 1. Find from WSLWRAP_PATH (fish array)
-    if set -q WSLWRAP_PATH
-        for dir in $WSLWRAP_PATH
-            set -l candidate "$dir/$cmd.exe"
-            if test -f $candidate && test -x $candidate
-                echo $candidate
-                return 0
-            end
+    for dir in $WSLWRAP_PATH
+        set -l candidate "$dir/$cmd.exe"
+        if test -f $candidate && test -x $candidate
+            echo $candidate
+            return 0
         end
     end
 
